@@ -1,6 +1,6 @@
-/*
-* The actual Qt Widget-based GUI logic.
-* Includes main shit like startup page, control panel, button grid.
+/* PURPOSE:
+* The actual Qt Widget based GUI logic.
+* Includes main shit like startup page, control panel and button grid.
 */
 
 #pragma once
