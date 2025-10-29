@@ -52,10 +52,10 @@ void MainWindow::setupControlPage() {
     layout->addWidget(overrideButton);
 
     QGridLayout* grid = new QGridLayout();
-    QStringList states = {"IDLE", "OPENING", "OPEN", "CLOSING", "ERROR"};
+    QStringList states = {"IDLE", "OPEN", "CLOSE", "ERROR"};
     for (int i = 0; i < states.size(); ++i) {
         QPushButton* btn = new QPushButton(states[i], controlPage);
-        btn->setEnabled(false);  // disabled until override
+        btn->setEnabled(false);  // disabled until override, as in its disabled already. true when manually set to true.  
         btn->setStyleSheet("background-color: #333333; color: white;");
         connect(btn, &QPushButton::clicked, this, &MainWindow::onStateButtonPressed);
         stateButtons.append(btn);
