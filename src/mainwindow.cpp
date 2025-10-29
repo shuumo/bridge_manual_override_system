@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(connection, &ConnectionManager::connectionLost,
             this, &MainWindow::handleConnectionLost);
 
-    //hardcoded ip and port
+    //hardcoded ip and port, change later!!
     connection->start("192.168.10.179", 4210);
 }
 
