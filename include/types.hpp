@@ -11,6 +11,7 @@ enum class BridgeState {
     OPENING,
     OPEN,
     CLOSING,
+    CLOSED,
     ERROR
 };
 

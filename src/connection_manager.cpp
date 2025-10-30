@@ -70,10 +70,15 @@ void ConnectionManager::processPendingDatagrams() {
             for (const QString& part : parts) {
                 if (part.startsWith("STATE=")) {
                     QString state = part.section('=', 1, 1);
+
                     if (state == "IDLE") m_status.state = BridgeState::IDLE;
-                    else if (state == "OPENING") m_status.state = BridgeState::OPENING;
-                    else if (state == "OPEN") m_status.state = BridgeState::OPEN;
-                    else if (state == "CLOSING") m_status.state = BridgeState::CLOSING;
+                    else if (state == "ROAD_WARNING") m_status.state = BridgeState::OPENING;
+                    else if (state == "ROAD_CLOSED") m_status.state = BridgeState::OPENING;
+                    else if (state == "BRIDGE_LIFTING") m_status.state = BridgeState::OPENING;
+                    else if (state == "BOAT_PASSAGE") m_status.state = BridgeState::OPEN;
+                    else if (state == "BRIDGE_LOWERING") m_status.state = BridgeState::CLOSING;
+                    else if (state == "BRIDGE_STABILIZING") m_status.state = BridgeState::CLOSED;
+                    else if (state == "BOAT_DETECTED") m_status.state = BridgeState::OPENING;
                     else if (state == "ERROR") m_status.state = BridgeState::ERROR;
                     else m_status.state = BridgeState::INACTIVE;
                 } else if (part.startsWith("MODE=")) {

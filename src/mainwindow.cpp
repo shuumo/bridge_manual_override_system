@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
             this, &MainWindow::handleConnectionLost);
 
     //hardcoded ip and port, change later!!
-    connection->start("192.168.10.179", 4210);
+    connection->start("172.20.10.3", 4210);
 }
 
 void MainWindow::setupStartupPage() {
@@ -52,15 +52,16 @@ void MainWindow::setupControlPage() {
     layout->addWidget(overrideButton);
 
     QGridLayout* grid = new QGridLayout();
-    QStringList states = {"IDLE", "OPEN", "CLOSE", "ERROR"};
-    for (int i = 0; i < states.size(); ++i) {
+    QStringList states = {"OPEN", "CLOSE", "STOP"};
+    for(int i = 0; i < states.size(); ++i) {
         QPushButton* btn = new QPushButton(states[i], controlPage);
-        btn->setEnabled(false);  // disabled until override, as in its disabled already. true when manually set to true.  
+        btn->setEnabled(false);  // Only active when override ON
         btn->setStyleSheet("background-color: #333333; color: white;");
         connect(btn, &QPushButton::clicked, this, &MainWindow::onStateButtonPressed);
         stateButtons.append(btn);
         grid->addWidget(btn, i / 3, i % 3);
     }
+
     layout->addLayout(grid);
 
     controlPage->setLayout(layout);
@@ -99,7 +100,14 @@ void MainWindow::onStateButtonPressed() {
     QPushButton* senderBtn = qobject_cast<QPushButton*>(sender());
     if (!senderBtn) return;
 
-    QString command = "SET_STATE " + senderBtn->text();
+    QString label = senderBtn->text();
+    QString command;
+
+    if (label == "OPEN") command = "OPEN";
+    else if (label == "CLOSE") command = "CLOSE";
+    else if (label == "STOP") command = "STOP";
+    else return; 
+
     connection->sendCommand(command);
 }
 
@@ -121,6 +129,7 @@ void MainWindow::updateBridgeStatus(const BridgeStatus& status) {
         case BridgeState::OPENING: stateText += "OPENING"; break;
         case BridgeState::OPEN: stateText += "OPEN"; break;
         case BridgeState::CLOSING: stateText += "CLOSING"; break;
+        case BridgeState::CLOSED: stateText += "CLOSED"; break;
         case BridgeState::ERROR: stateText += "ERROR"; break;
         default: stateText += "UNKNOWN";
     }
