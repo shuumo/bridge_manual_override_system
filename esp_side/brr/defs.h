@@ -17,24 +17,24 @@
 // #define SIMULATE_BUTTON_PIN 4  // ENA pin - press to simulate boat detection
 
 // Road Traffic Lights Set 1 (Bridge Left)
-#define ROAD_LIGHT_1_RED 16    // r r
-#define ROAD_LIGHT_1_YELLOW 17 // y r
-#define ROAD_LIGHT_1_GREEN 22  // g r
+#define ROAD_LIGHT_1_RED     23
+#define ROAD_LIGHT_1_YELLOW  15
+#define ROAD_LIGHT_1_GREEN   25
 
 // Road Traffic Lights Set 2 (Bridge Right)
-#define ROAD_LIGHT_2_RED 16    // r r
-#define ROAD_LIGHT_2_YELLOW 17 // y r
-#define ROAD_LIGHT_2_GREEN 22  // g r
+#define ROAD_LIGHT_2_RED     23
+#define ROAD_LIGHT_2_YELLOW  15
+#define ROAD_LIGHT_2_GREEN   25
 
 // Boat Traffic Lights Set 3 (Ship Left)
-#define BOAT_LIGHT_3_RED 23    // r w (gold)
-#define BOAT_LIGHT_3_YELLOW 25  // y w (purple/blue)
-#define BOAT_LIGHT_3_GREEN 15  // y w (orange)
+#define BOAT_LIGHT_3_RED     17
+#define BOAT_LIGHT_3_YELLOW  16
+#define BOAT_LIGHT_3_GREEN   22 
 
 // Boat Traffic Lights Set 4 (Ship Right 2)
-#define BOAT_LIGHT_4_RED 23    // r w (gold)
-#define BOAT_LIGHT_4_YELLOW 25  // g w (blue/purple)
-#define BOAT_LIGHT_4_GREEN 15  // y w (orange)
+#define BOAT_LIGHT_4_RED     17
+#define BOAT_LIGHT_4_YELLOW  16
+#define BOAT_LIGHT_4_GREEN   22
 
 //Ultrasonic pins
 // Ultrasonic Sensors (HC-SR04) — no conflicts
