@@ -202,13 +202,13 @@ if (wifiConnected && millis() - lastPingReceived > 3000) {
   // Check for serial commands for testing
   if (Serial.available() > 0) {
     char cmd = Serial.read();
-    if (cmd == 't' || cmd == 'T') {
+    if (cmd == 'ttt!' || cmd == 'TTT!') {
       testMotor();
-    } else if (cmd == 'r' || cmd == 'R') {
+    } else if (cmd == 'rrr' || cmd == 'RRR') {
       Serial.println("\n*** RESETTING TO IDLE ***");
       Motor::the().reset();
       changeState(IDLE);
-    } else if (cmd == 'e' || cmd == 'E') {
+    } else if (cmd == 'eee!' || cmd == 'EEE') {
       testEncoder();
     }
   }
@@ -256,19 +256,29 @@ if (wifiConnected && millis() - lastPingReceived > 3000) {
       case ROAD_CLOSED:
         // Red lights on, ready to lift
         // Give a brief moment for any last cars to see the red
-        if (timeInState >= 1000) {
+        if (timeInState >= 10000) {
           changeState(BRIDGE_LIFTING);
         }
         break;
       
-      case BRIDGE_LIFTING:
-        // Wait for bridge to reach target angle
-      //  Motor::the().updateMovementSmooth(); //erin!! uncomment and it should make bridge stop smoother
-        if (Motor::the().isAtTarget()) {
-          Serial.println("[MOTOR] Bridge fully raised!");
-          changeState(BOAT_PASSAGE);
+        case BOAT_PASSAGE: {
+          unsigned long elapsed = timeInState;
+          if (elapsed < BOAT_PASSAGE_TIME) {
+            break;
+          }
+
+          //After boat time has elapsed, switch lights to red for 5s warning before lowering
+          if (elapsed < BOAT_PASSAGE_TIME + 5000) {
+            setBoatLights(true, false, false);   // Red for boats
+            setRoadLights(true, false, false);   // Red for road
+            break;
+          }
+
+          //After the 5s red warning, start lowering
+          Serial.println("[BOAT] Passage complete - Lowering bridge after red delay");
+          changeState(BRIDGE_LOWERING);
+          break;
         }
-        break;
       
       case BOAT_PASSAGE:
         // Boat lights green, waiting for boat to pass
